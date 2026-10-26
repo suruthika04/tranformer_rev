@@ -1,9 +1,0 @@
-
-fastapi
-uvicorn
-torch
-transformers
-numpy
-pydantic
-pytest
-httpx
