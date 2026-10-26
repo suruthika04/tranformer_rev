@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 // Configurable API base URL with fallback to local development
-const rawUrl = import.meta.env.VITE_BACKEND_URL || "http://127.0.0.1:8000";
+const rawUrl = import.meta.env.VITE_BACKEND_URL || "https://transformer-rev-api.onrender.com";
 const API_BASE = rawUrl.replace(/\/+$/, "") + (rawUrl.endsWith("/api") ? "" : "/api");
 
 // 4 clean corporate suggestion prompts for the welcome screen
