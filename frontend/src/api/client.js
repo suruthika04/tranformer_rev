@@ -3,7 +3,7 @@
  * All backend communication is centralized here.
  */
 
-const rawUrl = (import.meta.env.VITE_BACKEND_URL || "http://127.0.0.1:8000").trim();
+const rawUrl = "https://tranformer-rev-1.onrender.com";
 export const API_BASE = rawUrl.replace(/\/+$/, "").replace(/\/api$/, "");
 
 // ─── helpers ────────────────────────────────────────────────────────────────
