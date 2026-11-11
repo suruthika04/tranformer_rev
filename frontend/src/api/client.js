@@ -2,7 +2,6 @@
  * Nexa AI — API client
  * All backend communication is centralized here.
  */
-
 const rawUrl = (import.meta.env.VITE_BACKEND_URL || "https://nexa-ai-backend-chi.vercel.app").trim();
 export const API_BASE = rawUrl.replace(/\/+$/, "").replace(/\/api$/, "");
 
