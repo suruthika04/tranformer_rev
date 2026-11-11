@@ -1,0 +1,360 @@
+/* ========================================================
+   NEXA AI - TOKEN FILTERING DASHBOARD
+   Right-side evaluation panel with confidence analysis
+   ======================================================== */
+
+.token-panel {
+  width: 360px;
+  background: #0d0d15;
+  border-left: 1px solid #1f1f2e;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  height: 100%;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  z-index: 15;
+}
+
+.token-panel.collapsed {
+  width: 0;
+  border-left: none;
+}
+
+.token-panel-header {
+  padding: 16px;
+  border-bottom: 1px solid #1b1b2a;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #10101a;
+}
+
+.token-panel-title-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.token-panel-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #f1f5f9;
+  letter-spacing: -0.2px;
+}
+
+.panel-close-btn {
+  background: transparent;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 6px;
+}
+
+.panel-close-btn:hover {
+  color: #e2e8f0;
+  background: #1a1a2b;
+}
+
+.token-panel-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Empty State */
+.token-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: #64748b;
+  gap: 12px;
+  padding: 20px;
+}
+
+.token-empty-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: #151522;
+  border: 1px solid #252538;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7c3aed;
+}
+
+/* Message Confidence Banner */
+.confidence-card {
+  background: linear-gradient(135deg, #151226 0%, #10101c 100%);
+  border: 1px solid rgba(124, 58, 237, 0.35);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.15);
+}
+
+.confidence-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.confidence-label {
+  font-size: 12px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.confidence-score-val {
+  font-size: 28px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #a855f7, #c084fc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.2;
+}
+
+.confidence-gauge-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #4ade80;
+}
+
+/* Stats 2x2 Grid */
+.token-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.token-stat-card {
+  background: #13131e;
+  border: 1px solid #1f1f2e;
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-label {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.stat-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.stat-value.green { color: #22c55e; }
+.stat-value.purple { color: #c084fc; }
+.stat-value.red { color: #ef4444; }
+
+/* Interactive Threshold Box */
+.threshold-slider-box {
+  background: #13131e;
+  border: 1px solid #1f1f2e;
+  border-radius: 10px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.threshold-slider-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.threshold-val-pill {
+  padding: 2px 8px;
+  background: #1c1833;
+  border: 1px solid #7c3aed;
+  border-radius: 12px;
+  font-family: monospace;
+  color: #c084fc;
+}
+
+.threshold-slider-input {
+  width: 100%;
+  accent-color: #7c3aed;
+  cursor: pointer;
+}
+
+/* Semantic Safety Banner */
+.semantic-safety-box {
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  line-height: 1.4;
+}
+
+.semantic-safety-box.passed {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  color: #86efac;
+}
+
+.semantic-safety-box.fallback {
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: #fcd34d;
+}
+
+/* Token Chips Visualizer */
+.token-chips-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.section-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #94a3b8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.token-chips-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 10px;
+  background: #101018;
+  border: 1px solid #1c1c2a;
+  border-radius: 10px;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.token-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-family: 'Fira Code', monospace;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform 0.1s;
+}
+
+.token-chip:hover {
+  transform: translateY(-1px);
+}
+
+.token-chip.selected {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: rgba(34, 197, 94, 0.4);
+  color: #4ade80;
+}
+
+.token-chip.filtered {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #f87171;
+  text-decoration: line-through;
+}
+
+.token-chip.low-confidence {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: rgba(245, 158, 11, 0.4);
+  color: #fbbf24;
+}
+
+.token-chip-score {
+  font-size: 10px;
+  opacity: 0.8;
+}
+
+/* Prompt Preview Box */
+.prompt-preview-box {
+  background: #11111a;
+  border: 1px solid #1f1f2e;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-size: 12px;
+  color: #cbd5e1;
+  font-family: monospace;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* Expandable Token Table */
+.token-table-wrap {
+  border: 1px solid #1f1f2e;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.token-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.token-table th {
+  background: #151522;
+  color: #94a3b8;
+  font-weight: 600;
+  text-align: left;
+  padding: 8px 10px;
+  border-bottom: 1px solid #1f1f2e;
+}
+
+.token-table td {
+  padding: 7px 10px;
+  border-bottom: 1px solid #181825;
+  color: #cbd5e1;
+}
+
+.token-table tr:hover td {
+  background: #151524;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.status-badge.selected {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+}
+
+.status-badge.filtered {
+  background: rgba(239, 68, 68, 0.2);
+  color: #f87171;
+}
